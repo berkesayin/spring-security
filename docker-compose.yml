@@ -1,0 +1,39 @@
+services:
+  postgres:
+    container_name: postgres-db-c
+    image: postgres
+    environment:
+      POSTGRES_USER: berke
+      POSTGRES_PASSWORD: pg-db-12
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_DB: user
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin-ui-c
+    environment:
+      PGADMIN_DEFAULT_EMAIL: sayinberke34@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: pg-ui-1234
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+    ports:
+      - 5050:80
+    restart: unless-stopped
+  
+  mail-dev:
+    container_name: maildev-c
+    image: maildev/maildev
+    ports:
+      - 1080:1080
+      - 1025:1025
+  
+volumes:
+  postgres:
+    driver: local
+  pgadmin:
+    driver: local
